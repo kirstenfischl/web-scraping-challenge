@@ -12,10 +12,13 @@ first=True
 # Route to render index.html template using data from Mongo
 @app.route("/")
 def home():
-    print(mongo)
+    # print(mongo)
     # Find one record of data from the mongo database
     data = mongo.db.collection.find_one()
-    print(data)
+    for i in mongo.db.collection.find():
+        print(i.get("_id"))
+
+    # print(data)
     # Return template and data
     return render_template("index.html", data=data)
 
@@ -23,12 +26,13 @@ def home():
 # Route that will trigger the scrape function
 @app.route("/scrape")
 def scrape():
-    first = False
+    # first = False
     # Run the scrape function
     data = scrape_mars.scrape()
-    print(data)
+    
     # Update the Mongo database using update and upsert=True
-    mongo.db.collection.update({}, data, upsert=True)
+    mongo.db.collection.find_one_and_replace({},data,upsert=True)
+
 
     # Redirect back to home page
     return redirect("/")

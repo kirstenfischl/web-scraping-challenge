@@ -8,6 +8,7 @@ from splinter.exceptions import ElementDoesNotExist
 import pandas as pd
 import requests
 import pymongo
+import datetime
 import flask
 import time
 # # NASA Mars News
@@ -18,11 +19,18 @@ def scrape():
 
     news_url = 'https://mars.nasa.gov/news/?page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C165%2C184%2C204&blank_scope=Latest'
     browser.visit(news_url)
-    time.sleep(2)
+    
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
-
     articles = soup.find('li', class_='slide')
+    while articles is None:
+        time.sleep(1)
+        print(articles)
+        html = browser.html
+        soup = BeautifulSoup(html, 'html.parser')
+        articles = soup.find('li', class_='slide')
+    
+
     headlines = articles.find('div', class_="content_title")
     news_title = headlines.text.strip()
 
@@ -44,7 +52,7 @@ def scrape():
     # # Mars Weather
     twitter_url = 'https://twitter.com/marswxreport?lang=en'
     browser.visit(twitter_url)
-    time.sleep(2)
+    time.sleep(2) # delay so page loads
     soup3 = BeautifulSoup(browser.html, 'html.parser')
     tweet = soup3.find('div', class_='css-901oao r-hkyrab r-1qd0xha r-a023e6 r-16dba41 r-ad9z0x r-bcqeeo r-bnwqim r-qvutc0')
     #print(tweet)
@@ -83,8 +91,8 @@ def scrape():
             print("Error getting full image browser page\n",e)    
         hemis.append({"title":i.find("h3").getText(),"img_url":innerjpeg,"desc":i.find("p").getText()})
 
-    # print(hemis)
-    final = {"hemis":hemis,"twitter":tweet.getText(),"table":html_table,"featured_img":featured_image_url,"news":news}
+    print(datetime.datetime.now())
+    final = {"time":datetime.datetime.now(),"hemis":hemis,"twitter":tweet.getText(),"table":html_table,"featured_img":featured_image_url,"news":news}
     browser.quit()
 
     return final

@@ -5,9 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Costa Rica Weather</title>
+  <title>Mars is Future</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<!-- <link rel="shortcut icon" href="https://cdn.columbiauniversitybootcamp.com/wp-content/themes/Columbia-V3/media/favicon.ico"> -->
+  <link rel="stylesheet" href="../static/style.css">
+  <!-- <link rel="shortcut icon" href="https://cdn.columbiauniversitybootcamp.com/wp-content/themes/Columbia-V3/media/favicon.ico"> -->
 </head>
 
 <body>
@@ -15,10 +16,68 @@
     <div class="jumbotron text-center">
       <h1>What the Mars?!?</h1>
       
-      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Muskify Me!</a></p>
+      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Elon, Show Me!</a></p>
     </div>
     
-  
+    <div class="row">
+        <div class="col">
+            <!-- all left justify -->
+            <h1>Latest News From The Red Planet</h1>
+            <h2>{{data.news.title}}</h2>
+            <p>{{data.news.para}}</p>
+            <span>Scraped at {{data.time}}</span>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <h1>Featured Mars Image</h1>
+            <img src="{{data.featured_img}}"/>
+        </div>
+        <div class="col-md-4">
+            <h2>Current Weather on Mars</h2>
+            {{data.twitter}}
+            <br>
+            <h2>
+                Mars Factoids
+            </h2>
+            {{data.table|safe}}
+        </div>
+    </div>
+    <div class="row">
+        <!-- todo center -->
+        <h2>Mars Hemispheres</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{data.hemis[0].img_url}}" class="img-fluid" alt="Responsive image">
+            <h3>
+                {{data.hemis[0].title}}
+            </h3>
+        </div>
+        <div class="col-md-6">
+            <img src="{{data.hemis[1].img_url}}" class="img-fluid" alt="Responsive image">
+            <h3>
+                {{data.hemis[1].title}}
+            </h3>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{data.hemis[2].img_url}}" class="img-fluid" alt="Responsive image">
+            <h3>
+                {{data.hemis[2].title}}
+            </h3>
+        </div>
+        <div class="col-md-6">
+            <img src="{{data.hemis[3].img_url}}" class="img-fluid" alt="Responsive image">
+            <h3>
+                {{data.hemis[3].title}}
+            </h3>
+        </div>
+    </div>
+    </div>
   </div>
   </div>
 </body>
